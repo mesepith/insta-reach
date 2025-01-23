@@ -6,8 +6,20 @@
     function tryFollow() {
         // Loop through all buttons visible on the page
         const buttons = document.querySelectorAll('button');
-        buttons.forEach(button => {
-            if (button.textContent === 'Follow' && followCount < followLimit) {
+        let followableButtons = Array.from(buttons).filter(button => button.textContent === 'Follow');
+
+        // If no "Follow" buttons are left, display a message and refresh the page
+        if (followableButtons.length === 0) {
+            console.log('You have followed everyone on this page.');
+            alert('You have followed everyone on this page. Refreshing the page...');
+            setTimeout(() => {
+                location.reload(); // Refresh the page after 4 seconds
+            }, 4000);
+            return;
+        }
+
+        followableButtons.forEach(button => {
+            if (followCount < followLimit) {
                 button.click();
                 button.textContent = 'Following'; // Change the button text as a sign of completion
                 button.disabled = true; // Optional, disable the button
