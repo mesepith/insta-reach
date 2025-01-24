@@ -2,7 +2,7 @@
     let followCount = 0; 
     const followLimit = 10; 
 
-    function tryFollow() {
+    async function tryFollow() {
         const buttons = document.querySelectorAll('button');
         let followableButtons = Array.from(buttons).filter(button => button.textContent.trim() === 'Follow');
 
@@ -17,29 +17,31 @@
             return;
         }
 
-        followableButtons.forEach(button => {
-            if (followCount < followLimit) {
-                button.textContent = 'Processing ...';
-                setTimeout(() => {
-                    button.click(); 
-                    button.textContent = 'Following'; 
-                    button.disabled = true; 
-                    button.style.backgroundColor = '#00ff00'; 
-                }, 500); 
-                followCount++; 
+        for (const button of followableButtons) {
+            if (followCount >= followLimit) {
+                const message = `Follow limit of ${followLimit} reached.`;
+                chrome.runtime.sendMessage({ message }); // Notify popup
+                chrome.storage.local.set({ statusMessage: message }); // Save message
+                console.log(message);
+                return; 
             }
-        });
 
-        const message = `${followCount} people followed.`;
-        chrome.runtime.sendMessage({ message }); // Notify popup
-        chrome.storage.local.set({ statusMessage: message }); // Save message
+            button.textContent = 'Processing ...';
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for 1 second
+            button.click();
+            button.textContent = 'Following';
+            button.disabled = true; 
+            button.style.backgroundColor = '#00ff00';
+            followCount++;
 
-        if (followCount >= followLimit) {
-            console.log(`Follow limit of ${followLimit} reached.`);
-            return; 
+            const message = `${followCount} people followed.`;
+            chrome.runtime.sendMessage({ message }); // Notify popup
+            chrome.storage.local.set({ statusMessage: message }); // Save message
         }
 
-        setTimeout(tryFollow, 2000);
+        if (followCount < followLimit) {
+            setTimeout(tryFollow, 2000); // Retry after 2 seconds if there are more buttons
+        }
     }
 
     tryFollow();
