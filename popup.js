@@ -16,6 +16,27 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    // Check if the user is on the required Instagram page
+    function checkActiveTabURL() {
+        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+            const activeTab = tabs[0];
+            const url = activeTab.url;
+
+            if (url.startsWith('https://www.instagram.com/explore/people/')) {
+                // User is on the correct page, clear the message
+                statusDiv.textContent = '';
+                chrome.storage.local.set({ statusMessage: '' }); // Clear the message in storage
+            }
+        });
+    }
+
+    // Add a listener for tab updates to detect URL changes
+    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+        if (changeInfo.url && tab.active) {
+            checkActiveTabURL(); // Check if the new URL is the correct one
+        }
+    });
+
     // Clear the status message and run the follow script
     followButton.addEventListener('click', function () {
         statusDiv.textContent = ''; // Clear the previous message
@@ -24,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
             const activeTab = tabs[0];
             const url = activeTab.url;
 
-            // Check if the user is on the required Instagram page
             if (!url.startsWith('https://www.instagram.com/explore/people/')) {
                 const message = `
                     Visit this link: 
@@ -58,4 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+
+    // Initial check to see if the user is already on the correct page
+    checkActiveTabURL();
 });
