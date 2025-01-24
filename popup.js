@@ -2,45 +2,30 @@ document.addEventListener('DOMContentLoaded', function () {
     const followButton = document.getElementById('followButton');
     const statusDiv = document.getElementById('statusMessage'); // Div to display status messages
 
-    // Retrieve and display the message from storage when the popup loads
-    chrome.storage.local.get('statusMessage', function (result) {
-        if (result.statusMessage) {
-            statusDiv.innerHTML = result.statusMessage; // Render as HTML
-        }
-    });
-
-    // Listen for real-time messages from the content script
-    chrome.runtime.onMessage.addListener((request) => {
-        if (request.message) {
-            statusDiv.innerHTML = request.message; // Update the popup with the message as HTML
-        }
-    });
-
-    // Check if the user is on the required Instagram page
-    function checkActiveTabURL() {
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-            const activeTab = tabs[0];
-            const url = activeTab.url;
-
-            if (url.startsWith('https://www.instagram.com/explore/people/')) {
-                // User is on the correct page, clear the message
+    // Function to update and control the visibility of the status message
+    function updateStatusMessage() {
+        chrome.storage.local.get('statusMessage', function (result) {
+            if (result.statusMessage) {
+                statusDiv.textContent = result.statusMessage;
+                statusDiv.style.display = 'block'; // Show the message
+            } else {
                 statusDiv.textContent = '';
-                chrome.storage.local.set({ statusMessage: '' }); // Clear the message in storage
+                statusDiv.style.display = 'none'; // Hide the message
             }
         });
     }
 
-    // Add a listener for tab updates to detect URL changes
-    chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-        if (changeInfo.url && tab.active) {
-            checkActiveTabURL(); // Check if the new URL is the correct one
+    // Listen for real-time messages from the content script
+    chrome.runtime.onMessage.addListener((request) => {
+        if (request.message) {
+            chrome.storage.local.set({ statusMessage: request.message }, () => {
+                updateStatusMessage(); // Update the message in the popup
+            });
         }
     });
 
-    // Clear the status message and run the follow script
+    // Follow button functionality
     followButton.addEventListener('click', function () {
-        statusDiv.textContent = ''; // Clear the previous message
-
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             const activeTab = tabs[0];
             const url = activeTab.url;
@@ -48,25 +33,23 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!url.startsWith('https://www.instagram.com/explore/people/')) {
                 const message = `
                     Visit this link: 
-                    <a id="redirectLink" href="#" style="color: #007bff; text-decoration: underline;">
+                    <a href="https://www.instagram.com/explore/people/" style="color: #007bff; text-decoration: underline;">
                         https://www.instagram.com/explore/people/
                     </a> 
                     and then click on the Follow button above.
                 `;
-                statusDiv.innerHTML = message; // Render as HTML
-
-                // Add click event listener to the link
-                const redirectLink = document.getElementById('redirectLink');
-                redirectLink.addEventListener('click', function (event) {
-                    event.preventDefault(); // Prevent the default link behavior
-                    chrome.tabs.update(activeTab.id, { url: 'https://www.instagram.com/explore/people/' });
+                chrome.storage.local.set({ statusMessage: message }, () => {
+                    updateStatusMessage(); // Show the message in the popup
                 });
-
-                chrome.storage.local.set({ statusMessage: message }); // Save the message in storage
                 return;
             }
 
-            // If the user is on the correct page, execute the follow script
+            // Clear any previous messages
+            chrome.storage.local.set({ statusMessage: '' }, () => {
+                updateStatusMessage();
+            });
+
+            // Inject the follow script
             chrome.scripting.executeScript({
                 target: { tabId: activeTab.id },
                 func: () => { window.followCount = 0; } // Reset followCount
@@ -79,6 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Initial check to see if the user is already on the correct page
-    checkActiveTabURL();
+    // Update the message when the popup is opened
+    updateStatusMessage();
 });
