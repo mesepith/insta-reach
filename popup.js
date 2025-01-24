@@ -22,7 +22,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             const activeTab = tabs[0];
+            const url = activeTab.url;
 
+            // Check if the user is on the required Instagram page
+            if (!url.startsWith('https://www.instagram.com/explore/people/')) {
+                const message = 'Visit this link https://www.instagram.com/explore/people/ and then click on the Follow button above.';
+                statusDiv.textContent = message; // Show the message in the popup
+                chrome.storage.local.set({ statusMessage: message }); // Save the message in storage
+                return;
+            }
+
+            // If the user is on the correct page, execute the follow script
             chrome.scripting.executeScript({
                 target: { tabId: activeTab.id },
                 func: () => { window.followCount = 0; } // Reset followCount
