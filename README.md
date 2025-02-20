@@ -63,10 +63,6 @@ We welcome contributions! Follow these steps:
 4. Push to your branch: `git push origin feature-name`
 5. Open a Pull Request.
 
-## 📝 License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## 📬 Contact
 
-For any questions or feedback, open an issue or reach out via [your email or Twitter handle].
+For any questions or feedback, open an issue or reach out via [Twitter handle ZahirCodeCraft].
