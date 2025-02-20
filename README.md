@@ -15,11 +15,10 @@
 ## 📌 Installation
 
 1. **Download the Extension**
-   - Clone this repository or download the ZIP file from the **Releases** section on GitHub..
+   - Clone this repository 
    ```sh
    git clone https://github.com/mesepith/insta-reach.git
    ```
-   - Extract the ZIP file if you downloaded it manually.
 
 2. **Load the Extension in Chrome**
    - Open **Google Chrome** and go to `chrome://extensions/`
