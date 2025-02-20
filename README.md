@@ -56,7 +56,7 @@ The extension provides real-time status messages in the popup:
 
 ## 📷 Screenshots
 
-![Extension UI](images/free-auto-follow-instagram.png)
+![Extension UI](images/extension-ui.png)
 
 ## 📜 Permissions
 
