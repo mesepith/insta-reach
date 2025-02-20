@@ -15,7 +15,7 @@
 ## 📌 Installation
 
 1. **Download the Extension**
-   - Clone this repository or download the ZIP file.
+   - Clone this repository or download the ZIP file from the **Releases** section on GitHub..
    ```sh
    git clone https://github.com/mesepith/insta-reach.git
    ```
