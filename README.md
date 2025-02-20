@@ -9,6 +9,7 @@
 ✅ Automatically follows users on Instagram from the `https://www.instagram.com/explore/people/` page.
 ✅ Clicks on 10 "Follow" buttons at a time until all users on the page are followed.
 ✅ Automatically refreshes the page once everyone has been followed.
+✅ Displays status messages in the popup to inform users about actions and progress.
 ✅ Simple and user-friendly interface.
 ✅ Open-source and free to use!
 
@@ -42,6 +43,17 @@
    - Refresh the page with a new list of users to follow.
 4. The user can then click the **Follow** button in the extension again to repeat the process.
 
+## 📢 Status Messages
+The extension provides real-time status messages in the popup:
+
+- **If the user is on the wrong page:**
+  - "Visit this link: [Instagram Explore People](https://www.instagram.com/explore/people/) and then click on the Follow button above."
+- **During follow process:**
+  - "X people followed."
+  - "Follow limit of 10 reached."
+- **If all users on the page are followed:**
+  - "You have followed everyone on this page. Refreshing the page..."
+
 ## 📷 Screenshots
 
 ![Extension UI](images/free-auto-follow-instagram.png)
@@ -50,6 +62,7 @@
 
 This extension requires the following permissions:
 - `activeTab`: To interact with Instagram pages.
+- `storage`: To store and display status messages in the popup.
 - `scripting`: To execute JavaScript and automate clicks.
 
 ## 📖 Contributing
