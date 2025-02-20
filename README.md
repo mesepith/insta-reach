@@ -45,7 +45,7 @@
 
 ## 📷 Screenshots
 
-![Extension UI](screenshot1.png)
+![Extension UI](images/free-auto-follow-instagram.png)
 
 ## 📜 Permissions
 
