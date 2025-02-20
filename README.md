@@ -1,60 +1,72 @@
-# Free Auto Follow for Instagram Browser Extension
+# Free Auto Follow for Instagram
 
-## 🚀 Overview
-This open-source browser extension automates the process of following users on Instagram. It navigates to the [Instagram Explore People](https://www.instagram.com/explore/people/) page, detects users who haven't been followed yet, and sequentially clicks the 'Follow' button for 10 users at a time. Once all users on the page are followed, the extension refreshes the page to fetch a new list of users.
+## 🚀 About the Extension
 
-## ✨ Features
-- Automatically navigates to the Instagram Explore People page.
-- Clicks on 'Follow' buttons for 10 users at a time.
-- Continues the process until all users on the page are followed.
-- Displays a message when all users have been followed.
-- Refreshes the page to load a new list of users.
+**Free Auto Follow for Instagram** is a browser extension designed to help you grow your Instagram following for free! This extension automates the follow process, increasing your chances of getting followed back.
 
-## 🛠️ Installation
-1. Clone the repository:
+## 🎯 Features
+
+✅ Automatically follows users on Instagram from the `https://www.instagram.com/explore/people/` page.
+✅ Clicks on 10 "Follow" buttons at a time until all users on the page are followed.
+✅ Automatically refreshes the page once everyone has been followed.
+✅ Simple and user-friendly interface.
+✅ Open-source and free to use!
+
+## 📌 Installation
+
+1. **Download the Extension**
+   - Clone this repository or download the ZIP file.
    ```sh
    git clone https://github.com/mesepith/insta-reach.git
-   cd insta-reach
    ```
-2. Open **Google Chrome** and navigate to:
-   ```sh
-   chrome://extensions/
-   ```
-3. Enable **Developer mode** (toggle in the top right corner).
-4. Click **Load unpacked** and select the cloned project folder.
-5. The extension is now installed and ready to use.
+   - Extract the ZIP file if you downloaded it manually.
 
-## 🔧 How to Use
-1. Open Instagram and log into your account.
-2. Open the extension.
-3. Click the **Follow** button in the extension.
-4. The extension will begin following users in batches of 10.
-5. Once all users on the page are followed, a message will appear: _"You have followed everyone on this page. Refreshing the page..."_
-6. The page will refresh automatically to load a new set of users.
-7. Repeat the process until you're done!
+2. **Load the Extension in Chrome**
+   - Open **Google Chrome** and go to `chrome://extensions/`
+   - Enable **Developer Mode** (toggle switch at the top right)
+   - Click on **Load Unpacked**
+   - Select the folder where you downloaded/extracted the extension
 
-## 🛑 Limitations & Considerations
-- Instagram may impose follow limits per hour/day. Use the extension cautiously to avoid temporary restrictions.
-- Instagram's UI may change over time, which could break the extension. Contributions are welcome to keep it updated!
-- This extension is intended for personal use only. Avoid violating Instagram's policies.
+3. **Start Using the Extension**
+   - Open Instagram and visit: [`https://www.instagram.com/explore/people/`](https://www.instagram.com/explore/people/)
+   - Click the **Follow** button in the extension.
+   - It will automatically follow users in batches of 10 and refresh the page once everyone is followed.
 
-## 📌 Roadmap
-- [ ] Add a delay between follows to mimic human behavior.
-- [ ] Implement error handling for blocked actions.
-- [ ] Support for different languages in the extension UI.
-- [ ] Add an option to set a custom follow limit per session.
+## 🛠 How It Works
 
-## 🏗️ Contributing
-Contributions are welcome! To contribute:
+1. The extension checks if you are on `https://www.instagram.com/explore/people/`.
+2. If not, it prompts you to visit the correct page.
+3. Once on the page, clicking the **Follow** button in the extension will:
+   - Click on 10 "Follow" buttons one by one.
+   - Repeat the process until all users on the page are followed.
+   - Show a message: `You have followed everyone on this page. Refreshing the page...`.
+   - Refresh the page with a new list of users to follow.
+4. The user can then click the **Follow** button in the extension again to repeat the process.
+
+## 📷 Screenshots
+
+![Extension UI](screenshot1.png)
+
+## 📜 Permissions
+
+This extension requires the following permissions:
+- `activeTab`: To interact with Instagram pages.
+- `scripting`: To execute JavaScript and automate clicks.
+
+## 📖 Contributing
+
+We welcome contributions! Follow these steps:
+
 1. Fork the repository.
 2. Create a new branch: `git checkout -b feature-name`
-3. Make your changes and commit: `git commit -m "Added a new feature"`
-4. Push the changes: `git push origin feature-name`
-5. Open a Pull Request!
+3. Commit your changes: `git commit -m 'Add new feature'`
+4. Push to your branch: `git push origin feature-name`
+5. Open a Pull Request.
 
-## 💡 Acknowledgments
-Special thanks to the open-source community for inspiring this project!
+## 📝 License
 
----
+This project is licensed under the [MIT License](LICENSE).
 
-💻 **Created by [Zahir Alam](https://github.com/mesepith)** – Feel free to reach out or star the repo if you found it useful! 🌟
+## 📬 Contact
+
+For any questions or feedback, open an issue or reach out via [your email or Twitter handle].
