@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
-    "name": "Insta Reach",
+    "name": "Free Auto Follow for Instagram",
     "version": "1.0",
-    "description": "Supercharge your Instagram growth and attract a dedicated following",
+    "description": "Grow your Instagram following for free! This extension automates follows, increasing your chances of getting followed back. Install now and start growing your audience.",
     "permissions": [
         "activeTab",
         "scripting",
