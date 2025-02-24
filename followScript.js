@@ -25,6 +25,10 @@
                 const message = `Follow limit of ${followLimit} reached.`;
                 chrome.runtime.sendMessage({ message }); // Notify popup
                 chrome.storage.local.set({ statusMessage: message }); // Save the message
+
+                // Notify popup.js to stop the spinner and restore the button
+                chrome.runtime.sendMessage({ status: 'completed' });
+
                 return;
             }
 
@@ -43,7 +47,12 @@
 
         if (followCount < followLimit) {
             setTimeout(tryFollow, 2000); // Retry after 2 seconds if there are more buttons
+        } else {
+            setTimeout(() => {
+                chrome.runtime.sendMessage({ status: 'completed' }); // Notify popup
+            }, 1000); // Delay to ensure message is sent
         }
+        
     }
 
     tryFollow();

@@ -31,24 +31,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Follow button functionality
     followButton.addEventListener('click', function () {
+        // Change button to spinner
+        followButton.innerHTML = '<div class="spinner"></div>';
+        followButton.disabled = true; // Disable button to prevent multiple clicks
+    
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             const activeTab = tabs[0];
             const url = activeTab.url;
-
+    
             if (!url.startsWith('https://www.instagram.com/explore/people/')) {
                 const message = "Visit this link https://www.instagram.com/explore/people/ and then click on the Follow button above.";
-
+    
                 chrome.storage.local.set({ statusMessage: message }, () => {
                     updateStatusMessage(); // Show the message in the popup
+                    followButton.innerHTML = 'Follow'; // Restore button text
+                    followButton.disabled = false; // Re-enable button
                 });
                 return;
             }
-
+    
             // Clear any previous messages
             chrome.storage.local.set({ statusMessage: '' }, () => {
                 updateStatusMessage();
             });
-
+    
             // Inject the follow script
             chrome.scripting.executeScript({
                 target: { tabId: activeTab.id },
@@ -61,6 +67,22 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+    
+    // Listen for a message from followScript.js when it completes
+    chrome.runtime.onMessage.addListener((request) => {
+        if (request.status === 'completed') {
+            console.log("Follow action completed. Resetting button."); // Debugging
+    
+            setTimeout(() => {
+                followButton.innerHTML = 'Follow'; // Restore button text
+                followButton.disabled = false; // Re-enable button
+            }, 500); // Small delay to ensure proper reset
+        }
+    });
+    
+    
+    
+    
 
     // Update the message when the popup is opened
     updateStatusMessage();
