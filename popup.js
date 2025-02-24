@@ -6,14 +6,19 @@ document.addEventListener('DOMContentLoaded', function () {
     function updateStatusMessage() {
         chrome.storage.local.get('statusMessage', function (result) {
             if (result.statusMessage) {
-                statusDiv.textContent = result.statusMessage;
+                const clickableMessage = result.statusMessage.replace(
+                    /(https:\/\/www\.instagram\.com\/explore\/people\/)/g,
+                    '<a href="$1" target="_blank" style="color: #007bff; text-decoration: underline;">$1</a>'
+                );
+    
+                statusDiv.innerHTML = clickableMessage; // Use innerHTML for clickable links
                 statusDiv.style.display = 'block'; // Show the message
             } else {
                 statusDiv.textContent = '';
                 statusDiv.style.display = 'none'; // Hide the message
             }
         });
-    }
+    }    
 
     // Listen for real-time messages from the content script
     chrome.runtime.onMessage.addListener((request) => {
