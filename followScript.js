@@ -10,6 +10,9 @@
             const message = 'You have followed everyone on this page. Refreshing the page...';
             chrome.runtime.sendMessage({ message }); // Notify popup
 
+            // Immediately stop the spinner before refreshing
+            chrome.runtime.sendMessage({ status: 'completed' });
+
             setTimeout(() => {
                 // Clear the message before refreshing the page
                 chrome.storage.local.set({ statusMessage: '' }, () => {
