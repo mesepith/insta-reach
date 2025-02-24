@@ -31,13 +31,8 @@ document.addEventListener('DOMContentLoaded', function () {
             const url = activeTab.url;
 
             if (!url.startsWith('https://www.instagram.com/explore/people/')) {
-                const message = `
-                    Visit this link: 
-                    <a href="https://www.instagram.com/explore/people/" style="color: #007bff; text-decoration: underline;">
-                        https://www.instagram.com/explore/people/
-                    </a> 
-                    and then click on the Follow button above.
-                `;
+                const message = "Visit this link https://www.instagram.com/explore/people/ and then click on the Follow button above.";
+
                 chrome.storage.local.set({ statusMessage: message }, () => {
                     updateStatusMessage(); // Show the message in the popup
                 });
