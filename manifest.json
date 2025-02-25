@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Free Auto Follow for Instagram",
-    "version": "1.1",
+    "version": "1.2",
     "description": "Grow your Instagram following for free! This extension automates follows, increasing your chances of getting followed back",
     "permissions": [
         "activeTab",
